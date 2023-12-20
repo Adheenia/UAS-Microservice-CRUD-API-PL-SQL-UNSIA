@@ -1,3 +1,16 @@
+NAMA KELOMPOK : 1. Ade Kurnia Budiman
+                2. Ahmad Bisyral Hafi
+                3. Ahmad Munazar
+                4. Aldi Yahya Awaluddin
+
+Noted : Dikerjakan oleh 
+        1. Ade Kurnia Budiman
+        2. Ahmad Bisyral Hafi
+              
+
+
+
+
 Dokumentasi Proyek Flask dengan PostgreSQL dan Bootstrap
 1.	Pengaturan Awal
 •	Install python
