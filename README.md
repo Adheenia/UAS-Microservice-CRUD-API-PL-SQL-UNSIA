@@ -8,92 +8,101 @@ Noted : Dikerjakan oleh
         2. Ahmad Bisyral Hafi
               
 
+```markdown
+# Aplikasi Mahasiswa Flask
 
+Aplikasi sederhana menggunakan Flask dan SQLAlchemy untuk manajemen data mahasiswa.
 
+## Instalasi
 
-Dokumentasi Proyek Flask dengan PostgreSQL dan Bootstrap
-1.	Pengaturan Awal
-•	Install python
-•	Buat dan aktifkan virtual evoironment
-python -m venv venv		 // untuk linux/mac
-venv\Scripts\activate  		// untuk windows
-•	Instal dependensi
-pip install Flask Flask-SQLAlchemy
+1. Clone repositori:
 
-2.	Struktur file
-project/
-|-- app/
-|   |-- static/
-|   |   |-- style.css
-|   |-- templates/
-|   |   |-- index.html
-|   |   |-- login.html
-|   |-- __init__.py
-|   |-- models.py
-|   |-- routes.py
-|-- venv/
-|-- config.py
-|-- app.py
+    ```bash
+    git clone https://github.com/username/repo.git
+    cd repo
+    ```
 
-3.	Setup Database
-•	Instal PostgreSQL dan pgAdmin
-•	Buat database ‘ha’ di pgAdmin
+2. Instal dependensi:
 
-4.	Konfigurasi Aplikasi
-•	Buat file ‘config.py’ untuk menyimpan konfigurasi aplikasi	:
-python
-  SECRET_KEY = 'your_secret_key'
-  SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:your_password@localhost:5432/ha'
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-5.	Model Mahasiswa
-•	Dalam file `models.py`:
-  python
-  from flask_sqlalchemy import SQLAlchemy
+3. Konfigurasi database: (sesuaikan `SQLALCHEMY_DATABASE_URI` di `app.py`)
 
-  db = SQLAlchemy()
+4. Jalankan aplikasi:
 
-  class Mahasiswa(db.Model):
-      id = db.Column(db.Integer, primary_key=True)
-      nama = db.Column(db.String(100))
-      jurusan = db.Column(db.String(50))
-      username = db.Column(db.String(50))
-      encrypted_password = db.Column(db.LargeBinary)
+    ```bash
+    python app.py
+    ```
 
-6.	Setup Aplikasi
-•	Dalam file ‘app.py’
-python
-  from flask import Flask
-  from config import SECRET_KEY, SQLALCHEMY_DATABASE_URI
-  from flask_sqlalchemy import SQLAlchemy
-  from app.routes import mahasiswa_bp
+## Fitur
 
-  app = Flask(__name__)
-  app.config['SECRET_KEY'] = SECRET_KEY
-  app.config['SQLALCHEMY_DATABASE_URI'] SQLALCHEMY_DATABASE_URI
-  db = SQLAlchemy(app)
+### Manajemen Mahasiswa
 
-  app.register_blueprint(mahasiswa_bp)
+1. **Get All Mahasiswa:** Mendapatkan daftar semua mahasiswa.
 
-7.	Rute dan Endpoint
-•	Dalam file ‘routes.py’ :
+    ```http
+    GET /mahasiswa
+    ```
 
-from flask import Blueprint, render_template, request, jsonify
-  from app.models import db, Mahasiswa
-  from sqlalchemy.exc import IntegrityError
+2. **Get Mahasiswa by ID:** Mendapatkan informasi mahasiswa berdasarkan ID.
 
-  mahasiswa_bp = Blueprint('mahasiswa', __name__)
+    ```http
+    GET /mahasiswa/<int:mahasiswa_id>
+    ```
 
-  @mahasiswa_bp.route('/mahasiswa', methods=['GET'])
-  def get_all_mahasiswa():
+3. **Create Mahasiswa:** Menambahkan mahasiswa baru.
 
-  @mahasiswa_bp.route('/mahasiswa/<int:mahasiswa_id>', methods=['GET'])
-  def get_mahasiswa(mahasiswa_id):
+    ```http
+    POST /mahasiswa
+    ```
 
-  @mahasiswa_bp.route('/mahasiswa', methods=['POST'])
-  def create_mahasiswa():
+    Request Body:
 
-  @mahasiswa_bp.route('/mahasiswa/<int:mahasiswa_id>', methods=['PUT'])
-  def update_mahasiswa(mahasiswa_id):
+    ```json
+    {
+        "nama": "Nama Mahasiswa",
+        "jurusan": "Jurusan Mahasiswa"
+    }
+    ```
 
-  @mahasiswa_bp.route('/mahasiswa/<int:mahasiswa_id>', methods=['DELETE'])
-  def delete_mahasiswa(mahasiswa_id):
+4. **Update Mahasiswa:** Memperbarui informasi mahasiswa berdasarkan ID.
+
+    ```http
+    PUT /mahasiswa/<int:mahasiswa_id>
+    ```
+
+    Request Body:
+
+    ```json
+    {
+        "nama": "Nama Mahasiswa Baru",
+        "jurusan": "Jurusan Mahasiswa Baru"
+    }
+    ```
+
+5. **Delete Mahasiswa:** Menghapus mahasiswa berdasarkan ID.
+
+    ```http
+    DELETE /mahasiswa/<int:mahasiswa_id>
+    ```
+
+### Fitur Baru - Manajemen Log
+
+Aplikasi ini telah diperbarui untuk mencatat log aktivitas ke dalam file. File log dapat disesuaikan dengan mengganti nama file dan format log.
+
+### Konfigurasi Log
+
+1. **Nama File Log:** Ganti 'app.log' dengan nama file log yang diinginkan di `app.py`.
+
+    ```python
+    logging_handler = logging.FileHandler('app.log')
+    ```
+
+2. **Format Log Pesan:** Sesuaikan format pesan log di `app.py`.
+
+    ```python
+    log_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    ```
+```
