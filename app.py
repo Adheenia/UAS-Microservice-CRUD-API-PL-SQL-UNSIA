@@ -1,10 +1,22 @@
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
+import logging
+from flask_logging import Logging
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:demauye0911@localhost:5432/ha'
 db = SQLAlchemy(app)
+
+
+logging_handler = logging.FileHandler('app.log') 
+logging_handler.setLevel(logging.INFO)
+log_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+logging_handler.setFormatter(log_formatter)
+
+app.logger.addHandler(logging_handler)
+
+log = Logging(app)
 
 class Mahasiswa(db.Model):
     id = db.Column(db.Integer, primary_key=True)
